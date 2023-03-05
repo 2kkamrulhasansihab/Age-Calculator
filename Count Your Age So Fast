@@ -1,0 +1,69 @@
+<html>
+<head>
+	<title>Age Calculator</title>
+	<style>
+		h1 {
+			text-align: center;
+			color: red;
+		}
+		label {
+			color: blue;
+		}
+		#result {
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<h1>Age Calculator</h1>
+	<h2><label>Enter your Date of Birth</label></h2>
+	<form>
+		<label>Year:</label>
+		<input type="number" id="year" placeholder="YYYY" required>
+		<br><br>
+		<label>Month:</label>
+		<input type="number" id="month" placeholder="MM" required>
+		<br><br>
+		<label>Day:</label>
+		<input type="number" id="day" placeholder="DD" required>
+		<br><br>
+		<button type="button" onclick="calculateAge()">Calculate Age</button>
+	</form>
+	<br>
+	<div id="result"></div>
+	<script>
+		function calculateAge() {
+			var year = document.getElementById("year").value;
+			var month = document.getElementById("month").value;
+			var day = document.getElementById("day").value;
+			var currentDate = new Date();
+			var currentYear = currentDate.getFullYear();
+			var currentMonth = currentDate.getMonth() + 1;
+			var currentDay = currentDate.getDate();
+
+			// calculate the difference in years, months, and days
+			var ageYears = currentYear - year;
+			var ageMonths = currentMonth - month;
+			var ageDays = currentDay - day;
+			if (ageMonths < 0 || (ageMonths == 0 && ageDays < 0)) {
+				ageYears--;
+				ageMonths += (ageDays < 0 ? 11 : 12);
+				ageDays += (ageDays < 0 ? 30 : 0); // assuming all months have 30 days
+			}
+			// construct the output string
+			var output = "Your age is ";
+			if (ageYears > 0) {
+				output += ageYears + " year" + (ageYears > 1 ? "s" : "");
+			}
+			if (ageMonths > 0) {
+				output += (ageYears > 0 ? ", " : "") + ageMonths + " month" + (ageMonths > 1 ? "s" : "");
+			}
+			if (ageDays > 0) {
+				output += (ageYears > 0 || ageMonths > 0 ? ", and " : "") + ageDays + " day" + (ageDays > 1 ? "s" : "");
+			}
+			output += ".";
+			document.getElementById("result").innerHTML = output;
+		}
+	</script>
+</body>
+</html>
